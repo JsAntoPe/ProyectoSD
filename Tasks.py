@@ -4,4 +4,4 @@ app = Celery()
 
 @app.task
 def extraccion():
-    return 0;
+    return 0
