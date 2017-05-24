@@ -3,16 +3,17 @@ import scrapy
 
 class RecSpider(scrapy.Spider):
     name = "Rec"
-    start_urls = [
-        'https://github.com/trending'
-    ]
 
-
+    def start_requests(self):
+        start_urls = [
+            'https://github.com/trending'
+        ]
+        for url in start_urls:
+            yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        print("Datos:\n")
-        for language in response.css('div.f6'):
-            print(language.css('span.mr-3::text')+"\n")
+        yield response.css('//li[contains(@id, "pa-")]').extract()
+        """for language in response.css('//li[contains(@class, pa)]'):
             yield {
-                'language': language.css('span.mr-3::text'),
-            }
+                'language': language.css('//span[@class=mr-3]/text()').extract(),
+            }"""
