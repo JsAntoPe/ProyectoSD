@@ -1,7 +1,8 @@
-from celery import *
+#import celery import crontab
+from celery import Celery,  task
 
-app = Celery()
+app = Celery('extraccion', broker="//pyamqp://guest@localhost//")
 
 @app.task
-def extraccion():
-    return 0
+def extraccion(no_ack=True):
+    scrapy.crawl(data)
