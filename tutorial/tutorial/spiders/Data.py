@@ -16,3 +16,4 @@ class DataSpider(scrapy.Spider):
         resultado = resultado.strip(' \n')
         resultado = resultado.strip('\n\n')
         yield {"title" : resultado}
+
