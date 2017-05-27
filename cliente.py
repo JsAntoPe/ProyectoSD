@@ -3,8 +3,6 @@ from time import sleep
 import pika
 import tutorial.extraccion
 
-
-
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = connection.channel()
 
