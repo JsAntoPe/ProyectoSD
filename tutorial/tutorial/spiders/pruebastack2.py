@@ -21,4 +21,4 @@ class StackSpider(scrapy.Spider):
             obj = StackObjeto()
             obj['tags'] = pregunta.xpath(
                 'a[@class="post-tag"]/text()').extract()
-            yield
+            yield obj
