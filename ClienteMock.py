@@ -1,14 +1,13 @@
-import pika
 import numpy
 import pandas
-import os
+import dropboxSubidaParaProcesar
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+"""connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = connection.channel()
 
 channel.queue_declare(queue='fileTrans', durable=True)
 
-# Modificar esto para realizar la transferencia de archivos
+# Modificar esto para realizar la transferencia de archivos"""
 
 array = numpy.array([['', 'Col1', 'Col2'],
                          ['Row1', 1, 2],
@@ -22,9 +21,14 @@ writer.save()
 with open('myDataFrame.xlsx', 'rb') as f:
     data = f.read()
 
-channel.basic_publish(exchange='',
+result = dropboxSubidaParaProcesar.dropbox_subida_parap(data)
+
+result = result.get()
+
+print(result)
+"""channel.basic_publish(exchange='',
                       routing_key='fileTrans',
                       body=data
                       )
 os.remove('myDataFrame.xlsx')
-connection.close()
+connection.close()"""

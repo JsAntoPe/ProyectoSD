@@ -1,8 +1,10 @@
 import dropbox
 import pendulum
+import threading
 
 token = "kvbe4Epe2OAAAAAAAAAACFLOXRE34frCMWlvINIBHhfGehOAifIhED4gxvvVfhyU"
 dbx = dropbox.Dropbox(token)
+mutex = threading.Lock()
 
 
 def subida(data):
@@ -13,21 +15,23 @@ def subida(data):
 
 
 def bajar():
-    array = dbx.files_list_folder('/ParaProcesar').entries
+    mutex.Lock()
+    path = '/ParaProcesar'
+    array = dbx.files_list_folder(path).entries
     if array[0] is not None:
-        with open(array[0], 'rb') as f:
+        file = dbx.files_download_to_file(path + '/' + array[0].name)
+        with open(file, 'rb') as f:
             data = f.read()
-        dbx.files_delete('/ParaProcesar/'+array[0])
+        dbx.files_delete(path + '/' + array[0].name)
+        mutex.unlock()
         return data
     else:
+        mutex.unlock()
         return None
+
 
 def subidaProcesada(data):
     Month = pendulum.now('Europe/Madrid')
-
-    # En este hueco debe ir la toma de datos, para pasarla a la variable.
-
-    #
     print("Subiendo")
     fname = "/Procesado/Datos_" + Month.isoformat() + ".xlsx"
     response = dbx.files_upload(data.encode(), fname, mute=True)
