@@ -1,19 +1,21 @@
-from pyasn1_modules.rfc2315 import data
+from time import sleep
+
 import pika
-import sys
-#import extraccion
+import tutorial.extraccion
+
+
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = connection.channel()
 
 channel.queue_declare(queue='fileTrans', durable=True)
 
-"""for i in range(0, 5):
-    result = extraccion.ext.delay()"""
+# Modificar esto para realizar la transferencia de archivos
+for i in range(0, 5):
+    result = tutorial.extraccion.ext.delay()
+    sleep(2)
 
-#Modifcar esto para realizar la transferencia de archivos
-message = ' '.join(sys.argv[1:]) or "Hello World!"
-
+message = result.get()
 
 channel.basic_publish(exchange='',
                       routing_key='fileTrans',
@@ -21,5 +23,5 @@ channel.basic_publish(exchange='',
                       properties=pika.BasicProperties(
                           delivery_mode=2,  # make message persistent
                       ))
-print(" [x] Sent %r" % message)
+
 connection.close()
