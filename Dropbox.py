@@ -2,11 +2,12 @@ import dropbox
 import pendulum
 import threading
 import os
+import pandas
 
 token = "kvbe4Epe2OAAAAAAAAAACFLOXRE34frCMWlvINIBHhfGehOAifIhED4gxvvVfhyU"
 dbx = dropbox.Dropbox(token)
-mutex = threading.Lock()
-mutex2 = threading.Lock()
+#mutex = threading.Lock()
+#mutex2 = threading.Lock()
 
 
 def subida(data):
@@ -17,19 +18,19 @@ def subida(data):
 
 
 def bajar():
-    mutex.acquire()
+    bajar.mutex = threading.Lock()
+    bajar.mutex.acquire()
     path = '/ParaProcesar'
     array = dbx.files_list_folder(path).entries
     if array[0] is not None:
         dbx.files_download_to_file(array[0].name, path + '/' + array[0].name)
-        with open(array[0].name, 'rb') as f:
-            data = f.read()
+        data = pandas.read_Excel(array[0].name)
         dbx.files_delete(path + '/' + array[0].name)
-        mutex.release()
+        bajar.mutex.release()
         os.remove(array[0].name)
         return data
     else:
-        mutex.release()
+        bajar.mutex.release()
         return None
 
 
@@ -42,17 +43,18 @@ def subidaProcesada(data):
 
 
 def bajarArchivoDatos():
-    mutex2.acquire()
+    bajarArchivoDatos.mutex2 = threading.Lock()
+    bajarArchivoDatos.mutex2.acquire()
     path = '/Procesado'
     array = dbx.files_list_folder(path).entries
     if array[0] is not None:
         dbx.files_download_to_file(array[0].name, path + '/' + array[0].name)
         with open(array[0].name, 'rb') as f:
             data = f.read()
-        mutex.release()
+        bajarArchivoDatos.mutex.release()
         os.remove(array[0].name)
         return data
     else:
-        mutex.release()
+        bajarArchivoDatos.mutex.release()
         return None
 

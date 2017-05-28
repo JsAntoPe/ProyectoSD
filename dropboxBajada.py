@@ -7,5 +7,6 @@ app2 = Celery('dropboxBajada', broker="pyamqp://guest@localhost//")
 
 @app2.task(no_ack=True)
 def dropbox_bajada():
-    data = Dropbox.bajar()
-    procesarCelery.procesar_excel.apply_async(data)
+    newdata = Dropbox.bajar()
+    #data = Dropbox.bajarArchivoDatos()
+    procesarCelery.procesar_excel.apply_async(newdata)
