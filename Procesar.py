@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy
+import os
+
 
 def procesar(newdata):
     plt.rcdefaults()
@@ -18,4 +20,8 @@ def procesar(newdata):
     ax.set_xlabel('Etiquetas')
     ax.set_title('Lenguajes')
 
-    plt.show()
+    plt.savefig('graphics.png')
+    with open('graphics.png', 'rb') as f:
+        data = f.read()
+    os.remove('graphics.png')
+    return data
