@@ -1,7 +1,5 @@
-import numpy
-import pandas
 import matplotlib.pyplot as plt
-
+import numpy
 
 def procesar(newdata):
     plt.rcdefaults()
@@ -9,14 +7,14 @@ def procesar(newdata):
 
     # Example data
     languages = newdata.columns.values
-    y_pos = len(languages)
-    performance = newdata.loc[0]
+    values = newdata.as_matrix()
+    y_pos = numpy.arange(len(languages))
+    performance = values[0]
 
-    ax.barh(y_pos, performance, align='center',
-            color='green', ecolor='black')
+    ax.barh(y_pos, performance, xerr=0, align='center', color='green', ecolor='black')
     ax.set_yticks(y_pos)
     ax.set_yticklabels(languages)
-    ax.invert_yaxis()  # labels read top-to-bottom
+    ax.invert_yaxis()   #labels read top-to-bottom
     ax.set_xlabel('Etiquetas')
     ax.set_title('Lenguajes')
 
