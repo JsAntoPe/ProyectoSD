@@ -44,7 +44,7 @@ def empezar_crawl():
 	process = CrawlerProcess({
             'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
 			'FEED_FORMAT' : 'json',
-			'FEED_URI' : 'resultado.json'
+			'FEED_URI' : 'resultado.txt'
         })
 	process.crawl(StackSpider)
 	process.start()
