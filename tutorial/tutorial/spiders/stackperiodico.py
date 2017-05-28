@@ -27,6 +27,7 @@ class StackSpider(scrapy.Spider):
 
 app = Celery(backend="rpc://")
 
+
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
 	sender.add_periodic_task(10.0, empezar_crawl.s(), name='scrape every 10')
@@ -34,6 +35,7 @@ def setup_periodic_tasks(sender, **kwargs):
 		crontab(hour=7, minute=30, day_of_week=1),
 		empezar_crawl.s(),
 	)"""
+
 
 app.conf.timezone = 'Europe/London'
 app.conf.worker_max_tasks_per_child = 1
