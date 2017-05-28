@@ -1,11 +1,11 @@
-import matplotlib.pyplot as plt
+import matplotlib.pyplot
 import numpy
 import os
 
 
 def procesar(newdata):
-    plt.rcdefaults()
-    fig, ax = plt.subplots()
+    matplotlib.pyplot.rcdefaults()
+    fig, ax = matplotlib.pyplot.subplots()
 
     # Example data
     languages = newdata.columns.values
@@ -20,7 +20,7 @@ def procesar(newdata):
     ax.set_xlabel('Etiquetas')
     ax.set_title('Lenguajes')
 
-    plt.savefig('graphics.png')
+    matplotlib.pyplot.savefig('graphics.png')
     with open('graphics.png', 'rb') as f:
         data = f.read()
     os.remove('graphics.png')
