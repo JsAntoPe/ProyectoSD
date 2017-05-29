@@ -1,5 +1,5 @@
-from Dropbox import subida
-import json
+from dropboxSubidaParaProcesar import dropbox_subida_parap
+import celery
 import pandas
 import numpy
 import os
@@ -38,7 +38,7 @@ with open('r_procesado.txt', 'r') as procesado:
 		if 'php' in line: 
 			array.set_value('Row1', 'php', array.loc['Row1', 'php']+1)
 
-	subida(array)
+	dropbox_subida_parap.delay(array)
 
 os.remove('resultado.txt')
 
