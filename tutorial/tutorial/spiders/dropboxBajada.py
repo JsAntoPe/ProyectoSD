@@ -1,6 +1,6 @@
 from celery import Celery
 from Dropbox import bajar
-import procesarCelery
+import Mediador
 
 app2 = Celery('dropboxBajada', broker="pyamqp://guest@localhost//")
 
@@ -9,5 +9,5 @@ app2 = Celery('dropboxBajada', broker="pyamqp://guest@localhost//")
 def dropbox_bajada():
     newdata = bajar()
     if newdata is not None:
-        procesarCelery.procesar_excel.apply_async(newdata)
+        Mediador.mediador(3, newdata)
 
