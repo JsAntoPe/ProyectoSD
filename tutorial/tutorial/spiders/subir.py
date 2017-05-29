@@ -1,8 +1,8 @@
-from Intermediario import intermediario
 import celery
 import pandas
 import numpy
 import os
+from Director import director
 
 with open('resultado.txt', 'r') as datos:
     with open('r_procesado.txt', 'w+') as procesado:
@@ -34,5 +34,5 @@ with open('r_procesado.txt', 'r') as procesado:
         if 'php' in line:
             array.set_value('Row1', 'php', array.loc['Row1', 'php'] + 1)
 
-intermediario(1, array)
+director(1, array)
 os.remove('resultado.txt')

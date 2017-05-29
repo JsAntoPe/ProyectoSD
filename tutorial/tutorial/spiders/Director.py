@@ -3,7 +3,8 @@ from dropboxBajada import dropbox_bajada
 from procesarCelery import procesar_excel
 from dropboxSubidaGrafica import dropbox_grafica
 
-def intermediario(opcion, data):
+
+def director(opcion, data):
     if opcion == 1:
         dropbox_subida_parap(data)
     if opcion == 2:
