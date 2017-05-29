@@ -10,6 +10,7 @@ dbx = dropbox.Dropbox(token)
 
 def subida(newdata):
     now = pendulum.now('Europe/Madrid')
+    newdata = pandas.read_json(newdata)
     writer = pandas.ExcelWriter('myDataFrame.xlsx')
     newdata.to_excel(writer, 'DataFrame')
     writer.save()
@@ -39,15 +40,15 @@ def bajar():
         return None
 
 
-def subidaGrafica(data):
+def subidaProcesada(data):
     Month = pendulum.now('Europe/Madrid')
     print("Subiendo")
-    fname = "/Procesado/Datos_" + Month.format('YYYY-MM', formatter='alternative') + ".png"
-    response = dbx.files_upload(data, fname, mute=True)
+    fname = "/Procesado/Datos_" + Month.isoformat() + ".xlsx"
+    response = dbx.files_upload(data.encode(), fname, mute=True)
     print("uploaded2:", response)
 
 
-"""def bajarArchivoDatos():
+def bajarArchivoDatos():
     bajarArchivoDatos.mutex2 = threading.Lock()
     bajarArchivoDatos.mutex2.acquire()
     path = '/Procesado'
@@ -61,5 +62,5 @@ def subidaGrafica(data):
         return data
     else:
         bajarArchivoDatos.mutex.release()
-        return None"""
+        return None
 

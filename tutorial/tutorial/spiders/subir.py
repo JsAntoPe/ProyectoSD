@@ -37,8 +37,8 @@ with open('r_procesado.txt', 'r') as procesado:
 			array.set_value('Row1', 'html', array.loc['Row1', 'html']+1)
 		if 'php' in line: 
 			array.set_value('Row1', 'php', array.loc['Row1', 'php']+1)
-
-	dropbox_subida_parap.delay(array)
+	
+	dropbox_subida_parap.delay(array.to_json())
 
 os.remove('resultado.txt')
 
